@@ -1,6 +1,7 @@
 package com.esafirm.imagepicker.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.esafirm.imagepicker.R;
 import com.esafirm.imagepicker.listeners.OnFolderClickListener;
 import com.esafirm.imagepicker.model.Folder;
@@ -43,10 +45,13 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<FolderPickerAdapte
 
         final Folder folder = folders.get(position);
 
+        RequestBuilder<Drawable> thumbnailRequest = Glide
+                .with(context)
+                .load(context.getResources().getDrawable(R.drawable.folder_placeholder));
+
         Glide.with(context)
                 .load(folder.getImages().get(0).getPath())
-                .placeholder(R.drawable.folder_placeholder)
-                .error(R.drawable.folder_placeholder)
+                .thumbnail(thumbnailRequest)
                 .into(holder.image);
 
         holder.name.setText(folders.get(position).getFolderName());

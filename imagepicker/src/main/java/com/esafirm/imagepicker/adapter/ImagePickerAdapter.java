@@ -1,6 +1,7 @@
 package com.esafirm.imagepicker.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.esafirm.imagepicker.R;
 import com.esafirm.imagepicker.listeners.OnImageClickListener;
 import com.esafirm.imagepicker.model.Image;
@@ -44,10 +46,13 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
 
         Image image = images.get(position);
 
+        RequestBuilder<Drawable> thumbnailRequest = Glide
+                .with(context)
+                .load(context.getResources().getDrawable(R.drawable.folder_placeholder));
+
         Glide.with(context)
                 .load(image.getPath())
-                .placeholder(R.drawable.image_placeholder)
-                .error(R.drawable.image_placeholder)
+                .thumbnail(thumbnailRequest)
                 .into(viewHolder.imageView);
 
         if (isSelected(image)) {
